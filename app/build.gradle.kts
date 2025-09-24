@@ -15,13 +15,10 @@ repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
     // include local libs directory
-    flatDir {
-        dirs("libs")
-    }
 }
 
 dependencies {
-    implementation(files("libs/jcurses.jar"))
+    implementation("com.baulsupp.kolja:jcurses:0.9.5.3") 
     implementation("org.openjdk.jol:jol-core:0.17")
     // Use JUnit Jupiter for testing.
     testImplementation(libs.junit.jupiter)
@@ -48,9 +45,6 @@ tasks.named<Test>("test") {
 
 // This task helps run the app with the native library path
 tasks.named<JavaExec>("run") {
-    systemProperty("java.library.path", "libs")
-    // doFirst {
-    //     // This tells Java where to find the native library (libjcurses.so)
-    //     systemProperty("java.library.path", file("libs"))
-    // }
+    standardInput = System.`in`
+    jvmArgs = listOf("-Djava.library.path=${file("libs").absolutePath}")
 }
