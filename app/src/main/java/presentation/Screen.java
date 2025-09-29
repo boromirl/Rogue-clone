@@ -1,34 +1,17 @@
-import jcurses.system.*;
-// import sun.misc.Signal;
+package presentation;
 
-import presentation.*;
+import jcurses.system.InputChar;
+import jcurses.system.CharColor;
+import jcurses.system.Toolkit;
 
-public class Main {
-    public static void main(String[] args){
-        // int y = 0;
-        // CharColor color = new CharColor(CharColor.BLACK, CharColor.WHITE);
-        // Toolkit.init();
-        // while (true) {
-        //     InputChar c = Toolkit.readCharacter();
-        //     if ('q' == c.getCharacter())
-        //         break;
-        //     Toolkit.printString(String.format("c : %c", c.getCharacter()), 0, y++, color);
-        // }
-        // Toolkit.shutdown();
+public class Screen {
+    public static void startScreen(){
+        CharColor backgroundColor = new CharColor(CharColor.BLACK, CharColor.BLACK);
+        CharColor textColor = new CharColor(CharColor.BLACK, CharColor.WHITE);
 
-
-        // Toolkit.init();
-
-        // presentation.Screen.startScreen();      
-
-        // Toolkit.shutdown();
-
-        Toolkit toolkit = new Toolkit();
-        toolkit.init();
-                CharColor textColor = new CharColor(CharColor.BLACK, CharColor.WHITE);
-
-
-                String[] strings = {
+        Toolkit.clearScreen(backgroundColor);
+    
+        String[] strings = {
 "          _____                   _______                   _____                    _____                    _____          ",
 "         /\\    \\                 /::\\    \\                 /\\    \\                  /\\    \\                  /\\    \\         ",
 "        /::\\    \\               /::::\\    \\               /::\\    \\                /::\\____\\                /::\\    \\        ",
@@ -58,11 +41,32 @@ public class Main {
         int rows = Toolkit.getScreenHeight();
         int cols = Toolkit.getScreenWidth();
 
-        String debug = String.format("Screen width = %d\nScreen height = %d\nStrings height = %d\nStrings width = %d", rows, cols, height, width);
-        
-        Toolkit.printString(debug, 0, 0, textColor);
+        int shiftX = (cols - width) / 2;
+        int shiftY = (rows - height) / 2;
+
+        for (int i = 0; i < height; i++) {
+            Toolkit.printString(strings[i], 100, -10, textColor);
+        }
+
+        String continueText = "Press any key to continue...";
+        shiftX = (cols - continueText.length()) / 2;
+        Toolkit.printString(continueText, 0, height + 1, textColor);
+
         Toolkit.readCharacter();
 
-        Toolkit.shutdown();
+
+
+    }
+
+    public void menuScreen() {
+
+    }
+
+    public void deadScreen() {
+
+    }
+
+    public void endgameScreen() {
+
     }
 }
